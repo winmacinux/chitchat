@@ -1,0 +1,56 @@
+html,
+body {
+  height: 100%;
+}
+.container-fluid {
+  padding: 0;
+}
+.users-list {
+  background-color: white;
+}
+
+.users-list a {
+  background-color: white;
+  color: #757575;
+  border: 1px solid rgba(0, 0, 0, .125);
+}
+
+.chat-list {
+  background-color: #EEE7DD;
+  padding: 0;
+}
+
+.chat-list .media {
+  width: 60%;
+  clear: both;
+  border: none !important;
+  border-radius: 15px;
+}
+
+.chat-list .media-left {
+  float: left;
+  background-color: white;
+}
+
+.chat-list .media-right {
+  float: right;
+  background-color: #DBF9C7;
+}
+.chat-list .all-messages{
+  height: 85%;
+  overflow-y: scroll;
+}
+.chat-list .message-area {
+  width: 100%;
+  height: 15%;
+  background-color: white;
+}
+.active-status{
+  color: #7CB342;
+}
+.h-10 {
+  height: 10% !important;
+}
+.h-90 {
+  height: 90% !important;
+}

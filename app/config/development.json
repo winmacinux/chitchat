@@ -1,0 +1,25 @@
+{
+    "host": "http://localhost:8088",
+    "dbURI": "mongodb://ds123372.mlab.com:23372/chitchat",
+    "dbAuth": {
+        "auth": {
+            "user": "test",
+            "password": "Test@123456"
+        },
+        "useNewUrlParser": true
+    },
+    "sessionSecert": "catscanfly",
+    "fb": {
+        "clientID": "1561191527344902",
+        "clientSecret": "df99258bb4c3e8d28d579b55ec056abb",
+        "callbackURL": "http://localhost:8088/auth/facebook/callback",
+        "enableProof": true,
+        "profileFields": ["id", "displayName", "photos"]
+      },
+      "twitter": {
+        "consumerKey": "Y4wnzwsKGMyk7CG0UN0YmKYSg",
+        "consumerSecret": "73DOfEQFJ7hui0bbcysuN6V3pNtaOfcV6zjBuX8msGoMKNk0",
+        "callbackURL": "http://localhost:8088/auth/twitter/callback",
+        "profileFields": ["id", "displayName", "photos"]
+    }
+}

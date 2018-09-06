@@ -1,0 +1,91 @@
+<%- include header.ejs %>
+<nav class="navbar navbar-expand-lg navbar-light bg-white justify-content-between">
+  <a class="navbar-brand" href="#"><strong>ChitChat Rooms</strong></a>
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src="<%= user.profilePic %>" class="rounded" height="50" alt=""> <%= user.fullName %>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
+      </li>
+    </ul>
+</nav>
+<div class="container" >
+<div class="row my-5" >
+  <div class="col text-center">
+    <h3><%= pageTitle %></h3> 
+    <p>Select or Create a Room and Have Fun!!</p>
+  </div>
+</div>
+<div class="row justify-content-center">
+  <div class="col-md-10 col-sm-8">
+    <div class="card bg-white">
+      <div class="card-header bg-white">
+        <form id="createRoom" >
+        <div class="input-group">
+          <input type="text" class="form-control" id="newRoom" placeholder="New server name">
+          <div class="input-group-append">
+            <button class="btn btn-success" type="submit">Create Room</button> 
+          </div>
+        </div>
+        </form>
+      </div>
+      <div class="card-body p-0" >
+        <div class="list-group rounded-0 list-group-flush" id="roomsList" >
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">First item <span class="badge badge-primary badge-pill">12</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<%- include footer.ejs %>
+
+<script src="/socket.io/socket.io.js" ></script>
+<script>
+  $(() => {
+    console.log(io)
+    let socket = io('<%= host %>/roomslist')
+    socket.on('connect', () => console.log('Connected to the Server.'))
+    
+    let renderChatRooms = chatrooms => {
+      let roomslist = $("#roomsList")
+      let listStr = '';
+      if(chatrooms.length > 0)
+        chatrooms.forEach( obj => {
+          console.log(obj)
+          listStr += `<a href="/chat/${obj.roomID}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">${obj.room} <span class="badge badge-primary badge-pill">${obj.users.length}</span></a>`
+        })
+      else 
+        listStr = '<div class="p-2 text-secondary" >No Rooms are online...</div>'
+
+      roomslist.html(listStr)
+    }
+
+    // Get list of the chat rooms.
+    socket.emit('getChatrooms')
+
+    socket.on('chatRoomsList', chatrooms => {
+      renderChatRooms(JSON.parse(chatrooms))
+    })
+
+    // Create New Chat room 
+    $("form#createRoom").on('submit', event => {
+      event.preventDefault();
+      let newRoom = $("#newRoom");
+      console.log(newRoom.val())
+      if(newRoom.val() === '' || newRoom.val() === null){
+        window.alert('Enter Room name first!')
+        return;
+      }
+
+      socket.emit('createNewRoom', newRoom.val())
+      newRoom.val('');
+
+    })
+    
+  })  
+</script>
